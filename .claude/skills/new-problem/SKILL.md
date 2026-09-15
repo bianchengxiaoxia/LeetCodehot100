@@ -1,21 +1,23 @@
 ---
 name: new-problem
-description: 为 LeetCode Hot 100 仓库创建新题目脚手架（文件夹 + LeetCode 官方 Python3 代码模板 + 题目卡 image.png + 空笔记）。当用户说"准备下一题""创建 XX 题的文件夹"或给出题号时使用。
+description: 为 LeetCode Hot 100 仓库创建/重建题目脚手架（专题文件夹下的官方 Python3 模板 + 题目卡 image.png + 空笔记）。当用户要求"重建某题""补题目脚手架"或给出题号时使用。
 ---
 
-# new-problem — Hot 100 新题目脚手架
+# new-problem — Hot 100 题目脚手架
 
-在仓库根目录创建 `<中文题名>/` 文件夹，结构与 `两数之和/` 一致：代码文件、`image.png` 题目卡、空《解题思路与收获.md》。
+> **2026-09-15 起全部 100 题脚手架已预生成完毕**（见各专题文件夹）。本 skill 现在主要用于：某题脚手架损坏/缺失时重建、题目数据过期时刷新。
+
+目录结构：`<专题>/<题号>.<中文题名>/`，内含三件套（代码模板、`image.png` 题目卡、空《解题思路与收获.md》）。
 
 ## 输入
 
-题号（优先）或中文题名。都没有时，读 `README.md` 的「题单明细」，取第一个未勾选题作为建议并向用户确认。
+题号（优先）或中文题名。
 
 ## 流程
 
 ### 1. 查静态映射
 
-读本 skill 目录下的 `hot100.json`（100 题静态表：`id / category / slug / title / difficulty`），按题号取条目。
+读本 skill 目录下的 `hot100.json`（100 题静态表：`id / category / slug / title / difficulty`），按题号取条目——category 决定专题文件夹，title 用于文件夹名。
 
 > ⚠️ 不要用 GraphQL 搜索类接口做题号→slug 反查（schema 频繁变动，已踩坑多次），静态表是唯一可靠来源。
 
@@ -30,16 +32,16 @@ curl -sS -m 20 -X POST https://leetcode.cn/graphql \
   -o _q.json
 ```
 
-用到 `data.question` 里的：`translatedContent`（HTML 题面）、`codeSnippets` 中 `langSlug=="python3"` 的 `code`（官方模板）。
+用到 `data.question` 里的：`translatedContent`（HTML 题面）、`codeSnippets` 中 `langSlug=="python3"` 的 `code`（官方模板）。校验 `translatedTitle` 与 hot100.json 的 `title` 一致。
 
 ### 3. 创建文件
 
-文件夹名 = 中文题名（`translatedTitle`，应与 hot100.json 的 `title` 一致；不一致以 API 为准并提醒用户）：
+输出文件夹 = `<category>/<题号>.<中文题名>/`（如 `双指针/283.移动零/`）：
 
 | 文件 | 内容 |
 |------|------|
-| `<slug驼峰>.py` | LeetCode 官方 python3 模板原文；若方法体为空，补一个 docstring 作为方法体（内容见下）。文件名转换：slug 按 `-` 分段，首段原样、其余段首字母大写（`group-anagrams` → `groupAnagrams.py`） |
-| `解题思路与收获.md` | 空文件 |
+| `<slug驼峰>.py` | LeetCode 官方 python3 模板原文；若方法体为空（无 docstring），补一个 docstring 作为方法体（格式见下）。文件名转换：slug 按 `-` 分段，首段原样、其余段首字母大写（`group-anagrams` → `groupAnagrams.py`） |
+| `解题思路与收获.md` | 空文件（若该题已完成则**不要覆盖**，先确认） |
 | `image.png` | 第 4 步生成 |
 
 方法体 docstring 格式：
@@ -60,7 +62,11 @@ PYTHONIOENCODING=utf-8 python .claude/skills/new-problem/render_card.py _q.json 
 
 - 删除临时文件 `_q.json` 和 `__pycache__/`
 - 建议用视觉模型抽查 `image.png`（乱码 / 重叠 / 截断）
-- 提醒用户：做完题后更新 `README.md`（勾 checkbox、进度数字、「已完成」表加行），再 `git add -A && git commit && git push`
+- 若是新结构变化，同步检查 `README.md` 的目录结构与题单链接
+
+## 批量生成（参考）
+
+历史上用一次性脚本批量生成了 100 题（读 hot100.json 循环：拉详情 → 建三件套 → 调 render_card.py，每题间隔 0.3s 防限流）。如需全量重建，照此模式写临时脚本，用完删除。
 
 ## 本机环境注意（2026-09 实测）
 
