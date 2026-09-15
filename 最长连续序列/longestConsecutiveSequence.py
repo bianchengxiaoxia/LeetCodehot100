@@ -3,13 +3,13 @@ class Solution:
         """128. 最长连续序列（中等）· 哈希
         题目链接: https://leetcode.cn/problems/longest-consecutive-sequence/
         """
-        s = set(nums)
+        s = set(nums) 
         best = 0
-        for x in s:                # 遍历集合：去重保证每条链只数一次
-            if x - 1 not in s:     # x 是链头（前驱不在集合中）才触发计数
+        for x in s:
+            if x-1 not in s:
                 length = 1
-                while x + 1 in s:  # 沿链向后数
+                while x+1 in s:
                     length += 1
                     x += 1
-                best = max(length, best)
+                best = max(length,best)
         return best
