@@ -6,17 +6,17 @@
 > 开始日期：2026-09-08 ｜ 题单来源：[LeetCode 热题 100 学习计划](https://leetcode.cn/studyplan/top-100-liked/)
 
 ![Language](https://img.shields.io/badge/language-Python-3776AB?logo=python&logoColor=white)
-![Progress](https://img.shields.io/badge/progress-2%20%2F%20100-orange)
+![Progress](https://img.shields.io/badge/progress-3%20%2F%20100-orange)
 
 ## 📊 总进度
 
 ```
-2 / 100  [■□□□□□□□□□□□□□□□□□□□] 2%
+3 / 100  [■□□□□□□□□□□□□□□□□□□□] 3%
 ```
 
 | 专题 | 进度 |
 |------|------|
-| 哈希 | 2 / 3 |
+| 哈希 | 3 / 3 ✅ |
 | 双指针 | 0 / 4 |
 | 滑动窗口 | 0 / 2 |
 | 子串 | 0 / 3 |
@@ -40,6 +40,7 @@
 |---|------|:----:|------|----------|------|
 | 1 | [两数之和](./两数之和/twoSum.py) | 🟢 | 哈希 | 哈希表一遍扫描：对每个 `x` 查 `target-x` 是否出现过，空间换时间 O(n²) → O(n) | 2026-09-08 |
 | 49 | [字母异位词分组](./字母异位词分组/groupAnagrams.py) | 🟡 | 哈希 | 键的设计：排序/计数做"指纹"分组；收获——复杂度低≠跑得快 | 2026-09-15 |
+| 128 | [最长连续序列](./最长连续序列/longestConsecutiveSequence.py) | 🟡 | 哈希 | set 一箭双雕：O(1) 查存在 + 去重保证每链只数一次；坑：要遍历集合而非列表 | 2026-09-15 |
 
 ## 📁 目录结构
 
@@ -60,7 +61,7 @@ LeetCodehot100/
 
 - [x] 1. 两数之和 🟢
 - [x] 49. 字母异位词分组 🟡
-- [ ] 128. 最长连续序列 🟡
+- [x] 128. 最长连续序列 🟡
 
 ### 双指针
 
