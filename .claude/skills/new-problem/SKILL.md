@@ -63,6 +63,7 @@ PYTHONIOENCODING=utf-8 python .claude/skills/new-problem/render_card.py _q.json 
 - 删除临时文件 `_q.json` 和 `__pycache__/`
 - 建议用视觉模型抽查 `image.png`（乱码 / 重叠 / 截断）
 - 若是新结构变化，同步检查 `README.md` 的目录结构与题单链接
+- **README 链接里题目名含空格/括号时必须 URL 编码**：空格→`%20`、`(`→`%28`、`)`→`%29`（中文字符不用编码），否则 Markdown 链接断链（2026-09-15 修过 13 处）
 
 ## 批量生成（参考）
 
